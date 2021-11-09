@@ -19,7 +19,6 @@ class AldiSpider(scrapy.Spider):
         with open(filename, 'w',newline='') as f:
             employee_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             employee_writer.writerow(['Product_title', 'Product_image', 'Packsize', 'Price', 'Price per unit'])
-        self.log(f'Saved file {filename}')
         for i in groceries:
             yield scrapy.Request(url=i, callback=self.items)
         
@@ -47,5 +46,3 @@ class AldiSpider(scrapy.Spider):
                         Price = PriceDollars + PriceCents
                         PricePerUnit = i.xpath('span[@class="box--baseprice"]/text()').get(default='')
                         employee_writer.writerow([ProductTitle, ProductImage, PackSize, Price, PricePerUnit])
-
-            self.log(f'Saved file {filename}')
